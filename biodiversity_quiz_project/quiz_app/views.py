@@ -1,0 +1,71 @@
+from django.shortcuts import render
+from rest_framework import viewsets, permissions, status
+from rest_framework.response import Response
+from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
+from django.shortcuts import get_object_or_404
+from .models import Category, Quiz, Question, Choice, QuizResult
+from .serializers import CategorySerializer, QuizSerializer, QuestionSerializer, ChoiceSerializer, QuizResultSerializer
+
+class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+class QuizViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Quiz.objects.all()
+    serializer_class = QuizSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    @action(detail=True, methods=['post'])
+    def submit(self, request, pk=None):
+        quiz = self.get_object()
+        answers = request.data.get('answers', {})
+        
+        if not answers:
+            raise ValidationError({"answers": "This field is required."})
+        
+        score = 0
+        total_questions = quiz.question_set.count()
+        
+        for question_id, choice_id in answers.items():
+            try:
+                question = Question.objects.get(id=question_id, quiz=quiz)
+                choice = Choice.objects.get(id=choice_id, question=question)
+                if choice.is_correct:
+                    score += 1
+            except (Question.DoesNotExist, Choice.DoesNotExist):
+                raise ValidationError({"answers": f"Invalid question or choice ID: {question_id}, {choice_id}"})
+
+        if len(answers) != total_questions:
+            raise ValidationError({"answers": f"You must answer all {total_questions} questions."})
+
+        quiz_result = QuizResult.objects.create(
+            user=request.user,
+            quiz=quiz,
+            score=score
+        )
+
+        serializer = QuizResultSerializer(quiz_result)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class QuizResultViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = QuizResultSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        return QuizResult.objects.filter(user=self.request.user)
+
+class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def list(self, request):
+        quiz_id = request.query_params.get('quiz_id')
+        if quiz_id:
+            questions = self.queryset.filter(quiz_id=quiz_id)
+        else:
+            questions = self.queryset
+        serializer = self.get_serializer(questions, many=True)
+        return Response(serializer.data)

@@ -1,0 +1,186 @@
+{
+  "category": "Biodiversity Conservation",
+  "title": "Biodiversity Conservation Quiz",
+  "questions": [
+    {
+      "text": "Which of the following is a primary cause of biodiversity loss?",
+      "choices": [
+        {"text": "Overpopulation", "is_correct": false},
+        {"text": "Habitat destruction", "is_correct": true},
+        {"text": "Afforestation", "is_correct": false},
+        {"text": "Pollution control", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What does the term 'endangered species' mean?",
+      "choices": [
+        {"text": "A species with low reproduction rate", "is_correct": false},
+        {"text": "A species threatened with extinction", "is_correct": true},
+        {"text": "A species that migrated recently", "is_correct": false},
+        {"text": "A species with high population growth", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is the largest rainforest in the world?",
+      "choices": [
+        {"text": "Congo Rainforest", "is_correct": false},
+        {"text": "Amazon Rainforest", "is_correct": true},
+        {"text": "Southeast Asian Rainforest", "is_correct": false},
+        {"text": "Daintree Rainforest", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is the significance of biodiversity hotspots?",
+      "choices": [
+        {"text": "They are rich in cultural heritage", "is_correct": false},
+        {"text": "They have a high number of endangered species", "is_correct": true},
+        {"text": "They are places with low pollution levels", "is_correct": false},
+        {"text": "They have limited wildlife species", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is the role of conservation biology?",
+      "choices": [
+        {"text": "Study of plant diseases", "is_correct": false},
+        {"text": "Protection of species and ecosystems", "is_correct": true},
+        {"text": "Creation of artificial habitats", "is_correct": false},
+        {"text": "Animal breeding", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which of the following is an invasive species?",
+      "choices": [
+        {"text": "Gray wolf", "is_correct": false},
+        {"text": "Zebra mussel", "is_correct": true},
+        {"text": "Bengal tiger", "is_correct": false},
+        {"text": "Monarch butterfly", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is the primary function of a wildlife corridor?",
+      "choices": [
+        {"text": "To control hunting", "is_correct": false},
+        {"text": "To connect fragmented habitats", "is_correct": true},
+        {"text": "To enhance tourism", "is_correct": false},
+        {"text": "To increase forest area", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is 'ex situ' conservation?",
+      "choices": [
+        {"text": "Conservation in natural habitats", "is_correct": false},
+        {"text": "Conservation in controlled environments like zoos", "is_correct": true},
+        {"text": "Conservation in wildlife sanctuaries", "is_correct": false},
+        {"text": "Conservation through hunting", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is the most effective way to combat climate change impacts on biodiversity?",
+      "choices": [
+        {"text": "Reducing greenhouse gas emissions", "is_correct": true},
+        {"text": "Increasing deforestation", "is_correct": false},
+        {"text": "Reducing water consumption", "is_correct": false},
+        {"text": "Creating national parks", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What percentage of the Earth's surface is covered by forests?",
+      "choices": [
+        {"text": "10%", "is_correct": false},
+        {"text": "30%", "is_correct": true},
+        {"text": "50%", "is_correct": false},
+        {"text": "75%", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which animal is critically endangered due to poaching for its horn?",
+      "choices": [
+        {"text": "African elephant", "is_correct": false},
+        {"text": "Rhino", "is_correct": true},
+        {"text": "Giraffe", "is_correct": false},
+        {"text": "Cheetah", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which of the following ecosystems has the highest biodiversity?",
+      "choices": [
+        {"text": "Desert", "is_correct": false},
+        {"text": "Tropical rainforest", "is_correct": true},
+        {"text": "Tundra", "is_correct": false},
+        {"text": "Savanna", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is a key goal of biodiversity conservation?",
+      "choices": [
+        {"text": "Maximizing agricultural output", "is_correct": false},
+        {"text": "Ensuring sustainable use of species and ecosystems", "is_correct": true},
+        {"text": "Expanding urban areas", "is_correct": false},
+        {"text": "Increasing industrial growth", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which of the following contributes to marine biodiversity loss?",
+      "choices": [
+        {"text": "Coral reef protection", "is_correct": false},
+        {"text": "Overfishing", "is_correct": true},
+        {"text": "Creation of marine parks", "is_correct": false},
+        {"text": "Regulated tourism", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which international agreement focuses on biodiversity conservation?",
+      "choices": [
+        {"text": "Paris Agreement", "is_correct": false},
+        {"text": "Kyoto Protocol", "is_correct": false},
+        {"text": "Convention on Biological Diversity", "is_correct": true},
+        {"text": "Geneva Convention", "is_correct": false}
+      ]
+    },
+    {
+      "text": "What is the primary reason for protecting keystone species?",
+      "choices": [
+        {"text": "They have the highest population density", "is_correct": false},
+        {"text": "They maintain the structure of an ecosystem", "is_correct": true},
+        {"text": "They migrate frequently", "is_correct": false},
+        {"text": "They are genetically superior", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which species is crucial in pollination and maintaining plant diversity?",
+      "choices": [
+        {"text": "Bees", "is_correct": true},
+        {"text": "Lions", "is_correct": false},
+        {"text": "Sharks", "is_correct": false},
+        {"text": "Elephants", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which is the main driver of habitat destruction?",
+      "choices": [
+        {"text": "Agriculture expansion", "is_correct": true},
+        {"text": "Space exploration", "is_correct": false},
+        {"text": "Increasing biodiversity", "is_correct": false},
+        {"text": "Animal migration", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Why is genetic diversity important in conservation?",
+      "choices": [
+        {"text": "It increases animal migration", "is_correct": false},
+        {"text": "It allows species to adapt to changing environments", "is_correct": true},
+        {"text": "It decreases the risk of diseases", "is_correct": false},
+        {"text": "It makes plants grow faster", "is_correct": false}
+      ]
+    },
+    {
+      "text": "Which conservation strategy helps in maintaining biodiversity in urban areas?",
+      "choices": [
+        {"text": "Building skyscrapers", "is_correct": false},
+        {"text": "Creating green spaces and parks", "is_correct": true},
+        {"text": "Expanding highways", "is_correct": false},
+        {"text": "Constructing factories", "is_correct": false}
+      ]
+    }
+  ]
+}
