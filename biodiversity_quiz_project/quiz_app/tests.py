@@ -4,17 +4,39 @@ from rest_framework.test import APIClient
 from rest_framework import status
 from .models import Category, Quiz, Question, Choice, QuizResult
 
+
 class QuizAPITestCase(TestCase):
     def setUp(self):
         self.client = APIClient()
-        self.user = User.objects.create_user(username='testuser', password='testpass')
+        self.user = User.objects.create_user(
+            username='testuser',
+            password='testpass'
+        )
+
         self.client.force_authenticate(user=self.user)
 
         self.category = Category.objects.create(name='Test Category')
-        self.quiz = Quiz.objects.create(title='Test Quiz', category=self.category)
-        self.question = Question.objects.create(quiz=self.quiz, text='Test Question')
-        self.choice1 = Choice.objects.create(question=self.question, text='Choice 1', is_correct=True)
-        self.choice2 = Choice.objects.create(question=self.question, text='Choice 2', is_correct=False)
+        self.quiz = Quiz.objects.create(
+            title='Test Quiz',
+            category=self.category
+        )
+
+        self.question = Question.objects.create(
+            quiz=self.quiz,
+            text='Test Question'
+        )
+
+        self.choice1 = Choice.objects.create(
+            question=self.question,
+            text='Choice 1',
+            is_correct=True
+        )
+
+        self.choice2 = Choice.objects.create(
+            question=self.question,
+            text='Choice 2',
+            is_correct=False
+        )
 
     def test_list_categories(self):
         response = self.client.get('/api/categories/')
@@ -37,7 +59,12 @@ class QuizAPITestCase(TestCase):
                 str(self.question.id): self.choice1.id
             }
         }
-        response = self.client.post(f'/api/quizzes/{self.quiz.id}/submit/', data, format='json')
+        response = self.client.post(
+            f'/api/quizzes/{self.quiz.id}/submit/',
+            data=data,
+            format='json'
+        )
+
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(response.data['score'], 1)
 
@@ -47,18 +74,27 @@ class QuizAPITestCase(TestCase):
                 str(self.question.id): 9999  # Invalid choice ID
             }
         }
-        response = self.client.post(f'/api/quizzes/{self.quiz.id}/submit/', data, format='json')
+        response = self.client.post(
+            f'/api/quizzes/{self.quiz.id}/submit/',
+            data=data,
+            format='json'
+        )
+
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_submit_quiz_missing_answer(self):
         data = {
             'answers': {}
         }
-        response = self.client.post(f'/api/quizzes/{self.quiz.id}/submit/', data, format='json')
+        response = self.client.post(
+                f'/api/quizzes/{self.quiz.id}/submit/',
+                data=data,
+                format='json'
+        )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_list_results(self):
         QuizResult.objects.create(user=self.user, quiz=self.quiz, score=1)
         response = self.client.get('/api/results/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.data), 1)`
+        self.assertEqual(len(response.data), 1)
