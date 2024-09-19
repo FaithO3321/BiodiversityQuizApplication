@@ -6,6 +6,11 @@ from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from .models import Category, Quiz, Question, Choice, QuizResult
 from .serializers import CategorySerializer, QuizSerializer, QuestionSerializer, ChoiceSerializer, QuizResultSerializer
+from django.core.cache import cache
+from django.conf import settings
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
+from rest_framework.pagination import PageNumberPagination
 
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
