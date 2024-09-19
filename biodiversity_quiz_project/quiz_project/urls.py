@@ -2,7 +2,12 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from quiz_app.views import CategoryViewSet, QuizViewSet, QuizResultViewSet, QuestionViewSet
+from quiz_app.views import (
+    CategoryViewSet,
+    QuizViewSet,
+    QuizResultViewSet,
+    QuestionViewSet
+)
 
 router = DefaultRouter()
 router.register(r'categories', CategoryViewSet)
