@@ -5,17 +5,25 @@ from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from django.shortcuts import get_object_or_404
 from .models import Category, Quiz, Question, Choice, QuizResult
-from .serializers import CategorySerializer, QuizSerializer, QuestionSerializer, ChoiceSerializer, QuizResultSerializer
+from .serializers import (
+    CategorySerializer,
+    QuizSerializer,
+    QuestionSerializer,
+    ChoiceSerializer,
+    QuizResultSerializer
+)
 from django.core.cache import cache
 from django.conf import settings
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from rest_framework.pagination import PageNumberPagination
 
+
 class CategoryViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
     permission_classes = [permissions.IsAuthenticated]
+
 
 class QuizViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Quiz.objects.all()
@@ -26,13 +34,13 @@ class QuizViewSet(viewsets.ReadOnlyModelViewSet):
     def submit(self, request, pk=None):
         quiz = self.get_object()
         answers = request.data.get('answers', {})
-        
+
         if not answers:
             raise ValidationError({"answers": "This field is required."})
-        
+
         score = 0
         total_questions = quiz.question_set.count()
-        
+
         for question_id, choice_id in answers.items():
             try:
                 question = Question.objects.get(id=question_id, quiz=quiz)
@@ -40,10 +48,17 @@ class QuizViewSet(viewsets.ReadOnlyModelViewSet):
                 if choice.is_correct:
                     score += 1
             except (Question.DoesNotExist, Choice.DoesNotExist):
-                raise ValidationError({"answers": f"Invalid question or choice ID: {question_id}, {choice_id}"})
+                raise ValidationError({
+                    "answers": (
+                        f"Invalid question or choice ID: "
+                        f"{question_id}, {choice_id}"
+                    )
+                })
 
         if len(answers) != total_questions:
-            raise ValidationError({"answers": f"You must answer all {total_questions} questions."})
+            raise ValidationError({
+                "answers": f"You must answer all {total_questions} questions."
+            })
 
         quiz_result = QuizResult.objects.create(
             user=request.user,
@@ -54,12 +69,14 @@ class QuizViewSet(viewsets.ReadOnlyModelViewSet):
         serializer = QuizResultSerializer(quiz_result)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+
 class QuizResultViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = QuizResultSerializer
     permission_classes = [permissions.IsAuthenticated]
 
     def get_queryset(self):
         return QuizResult.objects.filter(user=self.request.user)
+
 
 class QuestionViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Question.objects.all()
