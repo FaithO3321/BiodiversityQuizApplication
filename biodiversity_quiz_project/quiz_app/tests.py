@@ -98,3 +98,29 @@ class QuizAPITestCase(TestCase):
         response = self.client.get('/api/results/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
+
+    def test_list_quizzes_pagination(self):
+        # Create 10 more quizzes
+        for i in range(10):
+            Quiz.objects.create(title=f'Test Quiz {i}', category=self.category)
+
+    response = self.client.get('/api/quizzes/')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.assertIn('results', response.data)
+    self.assertIn('count', response.data)
+    self.assertIn('next', response.data)
+    self.assertIn('previous', response.data)
+    self.assertEqual(len(response.data['results']), 5)
+
+    def test_list_questions_pagination(self):
+        # Create 15 more questions
+        for i in range(15):
+            Question.objects.create(quiz=self.quiz, text=f'Test Question {i}')
+
+    response = self.client.get('/api/questions/')
+    self.assertEqual(response.status_code, status.HTTP_200_OK)
+    self.assertIn('results', response.data)
+    self.assertIn('count', response.data)
+    self.assertIn('next', response.data)
+    self.assertIn('previous', response.data)
+    self.assertEqual(len(response.data['results']), 10)  # Default page size
