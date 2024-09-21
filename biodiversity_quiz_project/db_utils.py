@@ -1,6 +1,9 @@
 # Content of db_utils.py:
 import mysql.connector
 from mysql.connector import Error
+from db_utils import create_connection, close_connection
+from quiz_logic import get_random_question, check_answer
+
 
 def create_connection():
     try:
@@ -17,14 +20,12 @@ def create_connection():
         print(f"Error while connecting to MySQL: {e}")
         return None
 
+
 def close_connection(connection):
     if connection.is_connected():
         connection.close()
         print('MySQL connection is closed')
 
-# Content of app.py:
-from db_utils import create_connection, close_connection
-from quiz_logic import get_random_question, check_answer
 
 def main():
     connection = create_connection()
@@ -39,8 +40,10 @@ def main():
     finally:
         close_connection(connection)
 
+
 if __name__ == "__main__":
     main()
+
 
 # Content of quiz_logic.py:
 def get_random_question(connection):
@@ -50,12 +53,15 @@ def get_random_question(connection):
     cursor.close()
     return question
 
+
 def check_answer(connection, question_id, user_answer):
     cursor = connection.cursor(dictionary=True)
-    cursor.execute("SELECT correct_answer FROM questions WHERE question_id = %s", (question_id,))
+    query = "SELECT correct_answer FROM questions WHERE question_id = %s"
+    cursor.execute(query, (question_id,))
     correct_answer = cursor.fetchone()['correct_answer']
     cursor.close()
     return user_answer.upper() == correct_answer
 
+
 # Content of requirements.txt:
-mysql-connector-python==8.0.26
+mysql-connector-python == 8.0.26
