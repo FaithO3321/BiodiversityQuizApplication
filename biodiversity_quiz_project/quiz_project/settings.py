@@ -186,11 +186,11 @@ WSGI_APPLICATION = 'quiz_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'NAME': os.getenv('biodiversity_quiz'),
+        'USER': os.getenv('quiz_user'),
+        'PASSWORD': os.getenv('33216188Bri.*'),
+        'HOST': os.getenv('root'),
+        'PORT': os.getenv('3306'),
     }
 }
 
