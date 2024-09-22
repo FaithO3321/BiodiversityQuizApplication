@@ -87,9 +87,9 @@ class QuizAPITestCase(TestCase):
             'answers': {}
         }
         response = self.client.post(
-                f'/api/quizzes/{self.quiz.id}/submit/',
-                data=data,
-                format='json'
+            f'/api/quizzes/{self.quiz.id}/submit/',
+            data=data,
+            format='json'
         )
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
@@ -104,23 +104,24 @@ class QuizAPITestCase(TestCase):
         for i in range(10):
             Quiz.objects.create(title=f'Test Quiz {i}', category=self.category)
 
-    response = self.client.get('/api/quizzes/')
-    self.assertEqual(response.status_code, status.HTTP_200_OK)
-    self.assertIn('results', response.data)
-    self.assertIn('count', response.data)
-    self.assertIn('next', response.data)
-    self.assertIn('previous', response.data)
-    self.assertEqual(len(response.data['results']), 5)
+        response = self.client.get('/api/quizzes/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('results', response.data)
+        self.assertIn('count', response.data)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        self.assertEqual(len(response.data['results']), 5)
 
     def test_list_questions_pagination(self):
         # Create 15 more questions
         for i in range(15):
             Question.objects.create(quiz=self.quiz, text=f'Test Question {i}')
 
-    response = self.client.get('/api/questions/')
-    self.assertEqual(response.status_code, status.HTTP_200_OK)
-    self.assertIn('results', response.data)
-    self.assertIn('count', response.data)
-    self.assertIn('next', response.data)
-    self.assertIn('previous', response.data)
-    self.assertEqual(len(response.data['results']), 10)  # Default page size
+        response = self.client.get('/api/questions/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn('results', response.data)
+        self.assertIn('count', response.data)
+        self.assertIn('next', response.data)
+        self.assertIn('previous', response.data)
+        # Default page size
+        self.assertEqual(len(response.data['results']), 10)
