@@ -20,6 +20,9 @@ class Quiz(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['-created_at']
+
 
 class Question(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE)
@@ -27,6 +30,9 @@ class Question(models.Model):
 
     def __str__(self):
         return self.text
+
+    class Meta:
+        ordering = ['id']
 
 
 class Choice(models.Model):
@@ -37,6 +43,9 @@ class Choice(models.Model):
     def __str__(self):
         return self.text
 
+    class Meta:
+        ordering = ['id']
+
 
 class QuizResult(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -46,3 +55,6 @@ class QuizResult(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - {self.quiz.title} - {self.score}"
+
+    class Meta:
+        ordering = ['-completed_at']
