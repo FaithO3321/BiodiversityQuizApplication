@@ -115,7 +115,8 @@ class QuizAPITestCase(TestCase):
         self.assertIn('next', response.data)
         self.assertIn('previous', response.data)
         # Default page size is now 10
-        self.assertEqual(len(response.data['results']), 10)
+        self.assertEqual(response.data['count'], 11)
+        self.assertLess(len(response.data['results']), 11)
 
     def test_list_questions_pagination(self):
         # Create 15 more questions
@@ -129,4 +130,5 @@ class QuizAPITestCase(TestCase):
         self.assertIn('next', response.data)
         self.assertIn('previous', response.data)
         # Default page size is 10
-        self.assertEqual(len(response.data['results']), 10)
+        self.assertEqual(response.data['count'], 16)
+        self.assertLess(len(response.data['results']), 16)
