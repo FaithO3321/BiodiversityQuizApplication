@@ -8,6 +8,9 @@ load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.getenv('SECRET_KEY')
 
@@ -60,17 +63,51 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'quiz_project.wsgi.application'
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+# Debug prints for environment variables
+print(f"DB_NAME: {os.getenv('DB_NAME')}")
+print(f"DB_USER: {os.getenv('DB_USER')}")
+
+db_password = os.getenv('DB_PASSWORD', '')
+masked_password = '*' * len(db_password) if db_password else 'Not set'
+print(f"DB_PASSWORD: {db_password}")
+
+print(f"DB_HOST: {os.getenv('DB_HOST')}")
+
+# Database configuration
+USE_SQLITE = os.getenv('USE_SQLITE', 'False').lower() == 'true'
+
+if USE_SQLITE:
+    print("Using SQLite for database")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
-}
+
+else:
+    print("Using MySQL for database")
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': os.getenv('DB_NAME', 'biodiversity_quiz'),
+            'USER': os.getenv('DB_USER', 'your_db_user'),
+            'PASSWORD': os.getenv('DB_PASSWORD', 'your_db_password'),
+            'HOST': os.getenv('DB_HOST', 'localhost'),
+            'PORT': os.getenv('DB_PORT', '3306'),
+        }
+    }
+
+# Print the final database configuration (without sensitive info)
+print(f"Final database configuration:")
+print(f"ENGINE: {DATABASES['default']['ENGINE']}")
+print(f"NAME: {DATABASES['default']['NAME']}")
+if DATABASES['default']['ENGINE'] == 'django.db.backends.mysql':
+    print(f"USER: {DATABASES['default']['USER']}")
+    print(f"HOST: {DATABASES['default']['HOST']}")
+    print(f"PORT: {DATABASES['default']['PORT']}")
+else:
+    print("Using SQLite - no USER, HOST, or PORT required")
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
